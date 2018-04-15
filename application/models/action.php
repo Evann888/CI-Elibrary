@@ -7,13 +7,18 @@
         $this->load->database();
     }
 
-    public function get_data(){
-      return $this->db->get('data');
+    public function get_data($table){
+      return $this->db->get($table);
     }
 
-    public function insert_record($table,$data = array()){
-        return $this->db->insert($table, $data);
+    public function insert_record($table,$data){
+      $sql = $this->db->insert($table, $data);
+      if($sql == true){
+        return true;
+      } else{
+        return false;
       }
+    }
 
     public function update_comment($data,$where,$table){
       $this->db->where('Nama= ', $where);
@@ -28,5 +33,11 @@
   	function cek_login($table,$where){
   		return $this->db->get_where($table,$where);
   	}
+
+    function getNamaLogin($email)
+    {
+      $query = $this->db->query("SELECT Nama FROM anggota WHERE Email = '$email'");
+      return $query->row()->Nama;
+    }
   }
  ?>

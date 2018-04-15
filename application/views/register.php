@@ -106,8 +106,7 @@
               <h2>Data Anggota Perpustakaan</h2>
           </div>
 
-				<?php echo validation_errors(); ?>
-				<?php echo form_open('register/input'); ?>
+			<?php echo form_open('register/input'); ?>
 					<div class="col-sm-3">
 						<div class="form-group label-floating">
 				      <label class="control-label">Nama </label>
@@ -125,7 +124,7 @@
 					<div class="col-sm-offset-1 col-sm-3">
 						<div class="form-group label-floating pgbar">
 							<label class="control-label">Tanggal Lahir </label>
-							<input type="text" class="form-control pgbar" name="tgl" required>
+		 					<input type="date" name="tgl" placeholder="dd-mm-yyyy" pattern="\d{1,2}-\d{1,2}-\d{4}">
 						</div>
 					</div>
 
@@ -145,8 +144,9 @@
 
 					<div class="col-sm-offset-2 col-sm-3">
 						<div class="form-group label-floating pgbar">
+							<?php echo validation_errors(); ?>
 							<label class="control-label">Email</label>
-							<input type="email" class="form-control pgbar" name="email" required>
+							<input type="email" class="form-control pgbar" name="email" >
 						</div>
 					</div>
 
@@ -171,25 +171,12 @@
 						 </div>
 				 </div>
 
-				 <div class="col-md-6">
-					 <div class="title">
-							 <h3>Datepicker</h3>
-					 </div>
-				 <div class="row">
-						 <div class="col-md-6">
-							 <div class="form-group label-static">
-								 <label class="control-label">Datepicker</label>
-								 <input type="text" class="datepicker form-control" value="2016/12/01" />
-							 </div>
-						 </div>
-				 </div>
-			 </div>
-
 				 <div class="row">
 					 <div class="text-center col-md-11">
 							 <button type="submit" class="btn btn-primary" name="submit">Submit</button>
 					 </div>
 				 </div>
+			 <?php echo form_close(); ?>
 
 				 <script>
 					 function test(){

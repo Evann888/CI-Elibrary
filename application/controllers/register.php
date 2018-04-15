@@ -16,9 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       // $data['data'] = $this->news_model->get_data();
       // echo 'test';
       $this->load->view('register');
-      $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[anggota.Email]');
     }
-
 
 	function input(){
     $data = array(
@@ -32,14 +30,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       'No_HP' => $this->input->post('nohp')
     );
 
-   if($this->input->method() == "post") {
-     if($this->form_validation->run() != false){
-       $this->action->insert_record("anggota",$data);
-       redirect('login');
-     }else{
-       echo "<script>alert('Email telah terdaftar')</script>";
-     }
-   }
+    $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[anggota.Email]');
+
+    if($this->form_validation->run() == FALSE){
+      $this->load->view('register');
+    }else{
+      $this->action->insert_record("anggota",$data);
+       // echo "<script>alert('Email telah terdaftar')</script>";
+       redirect('main');
+    }
 	}
 
     public function back()
