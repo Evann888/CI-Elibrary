@@ -43,9 +43,34 @@
         redirect(base_url("table"));
       }
 
+      public function toTableBukuUser()
+      {
+        redirect(base_url("table_buku_user"));
+      }
+
+      public function toUser()
+      {
+        redirect(base_url("user"));
+      }
+
+      public function toNotif()
+      {
+        redirect(base_url("table"));
+      }
+
       public function toContact()
       {
         redirect(base_url("contact_form"));
+      }
+
+      public function toStatistik()
+      {
+        redirect(base_url("statistik"));
+      }
+
+      public function toProfile()
+      {
+        redirect(base_url("profile"));
       }
 
 

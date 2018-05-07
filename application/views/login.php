@@ -35,6 +35,7 @@
 
 		            <div class="login-social-link centered">
 		            <p>or you can sign in via your social network</p>
+                <div class="text-danger"><?php if($this->session->flashdata('gagal')){echo $this->session->flashdata('gagal');}?> </div>
 		                <button class="btn btn-facebook" type="submit"><i class="fa fa-facebook"></i> Facebook</button>
 		                <button class="btn btn-twitter" type="submit"><i class="fa fa-twitter"></i> Twitter</button>
 		            </div>

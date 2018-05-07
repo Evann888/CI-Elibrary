@@ -16,5 +16,46 @@
         $this->load->view('t_sidebar');
         $this->load->view('contact_form');
       }
+
+      function postEmail()
+      {
+          $config = array(
+            'useragent' => 'CodeIgniter',
+                          'protocol'  => 'smtp',
+                          'mailpath'  => '/usr/sbin/sendmail',
+                          'smtp_host' => 'ssl://smtp.gmail.com',
+                          'smtp_user' => 'glhf3033@gmail.com',
+                          'smtp_pass' => 'qwas1234',
+                          'smtp_port' => 465,
+                          'smtp_keepalive' => TRUE,
+                          'smtp_crypto' => 'SSL',
+                          'wordwrap'  => TRUE,
+                          'wrapchars' => 80,
+                          'mailtype'  => 'html',
+                          'charset'   => 'utf-8',
+                          'validate'  => TRUE,
+                          'crlf'      => "\r\n",
+                          'newline'   => "\r\n",
+          );
+
+          $this->load->library('email',$config);
+          $this->email->set_newline("\r\n");
+          $this->email->from('glhf3033@gmail.com','admin');
+          $this->email->to('evann888@gmail.com');
+          $this->email->subject('Test');
+          $this->email->message('Ini adalah contoh email yang dikirim melalui localhost pada CodeIgniter menggunakan SMTP email Google (Gmail).');
+
+          if ($this->email->send())
+         {
+             echo 'Sukses! email berhasil dikirim.';
+         }
+         else
+         {
+           show_error($this->email->print_debugger());
+          $msg = $this->email->print_debugger();
+          show_error($msg);
+          return false;
+         }
+      }
   }
 ?>

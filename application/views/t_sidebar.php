@@ -6,9 +6,13 @@ MAIN SIDEBAR MENU
     <div id="sidebar"  class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-
-            <p class="centered"><a href="main/toProfile"><img src="<?php echo base_url();?>assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-            <h5 class="centered"> <?php echo $this->session->userdata("nama"); ?></h5>
+            <?php if($this->session->userdata("status") == 'login'): ?>
+              <h3 class="centered" style="color:white">Selamat Datang</h3>
+              <a href="main/toProfile"> <h5 class="centered"> <?php echo $this->session->userdata("nama"); ?></h5> </a>
+              <?php if($this->session->userdata("status_upload") == 1): ?>
+                <p class="centered"><a href="main/toProfile"><img src="<?php echo base_url('gambar/User/').$this->session->userdata("path");?>" class="img-circle" height="100" width="120"></a></p>
+              <?php endif;?>
+            <?php endif;?>
 
             <li class="mt">
                 <a class="active" href="index.php">
@@ -38,18 +42,21 @@ MAIN SIDEBAR MENU
                 </ul>
             </li>
             <li class="sub-menu">
-                <a href="javascript:;" >
+                <a  href="main/toTableBukuUser">
                     <i class="fa fa-th"></i>
-                    <span>Data Tables</span>
+                    <span>Katalog Buku</span>
                 </a>
-                <ul class="sub">
-                    <li><a  href="main/toTable">Tabel Buku</a></li>
-                </ul>
             </li>
             <li class="sub-menu">
                 <a href="main/toContact" >
                     <i class="fa fa-tasks"></i>
                     <span>Contact Us</span>
+                </a>
+            </li>
+            <li class="sub-menu">
+                <a href="main/toStatistik" >
+            <i class="fa fa-check" style="font-size:24px"></i>
+                    <span>Statistik</span>
                 </a>
             </li>
             <li class="sub-menu">
@@ -59,10 +66,11 @@ MAIN SIDEBAR MENU
                 </a>
                 <ul class="sub">
                     <li><a  href="main/toTable">Managemen Buku</a></li>
-                    <li><a  href="main/toTable">Managemen User</a></li>
-                    <li><a  href="main/toTable">Kirim Notifikasi</a></li>
+                    <li><a  href="main/toUser">Managemen User</a></li>
+                    <li><a  href="main/toNotif">Kirim Notifikasi</a></li>
                 </ul>
             </li>
+
         </ul>
         <!-- sidebar menu end-->
     </div>

@@ -7,37 +7,36 @@
       <!--main content start-->
       <section id="main-content">
           <section class="wrapper">
-          	<h3><i class="fa fa-angle-right"></i>Contact Us</h3>
+          	<h3><i class="fa fa-angle-right"></i>Halaman Ganti Password</h3>
 
           	<!-- BASIC FORM ELELEMNTS -->
           	<div class="row mt">
           		<div class="col-lg-12">
                   <div class="form-panel">
-                      <form action="Contact_form/postEmail" class="form-horizontal style-form" method="POST">
+                    <?php $attributes = array('id' => 'form_tambah','class'=> 'form-horizontal','method' => 'POST');
+                  echo form_open('Profile/ubahPass', $attributes); ?>
                           <div class="form-group">
-                              <label class="col-sm-2 col-sm-2 control-label">Subjek</label>
+                              <label class="col-sm-2 col-sm-2 control-label">Password Lama</label>
                               <div class="col-sm-4">
-                                  <input class="form-control round-form" autofocus type="text" f>
-                                    <!-- <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span> -->
+                                  <input class="form-control round-form" name="plama" autofocus type="password" required>
                               </div>
                           </div>
                           <div class="form-group">
-                              <label class="col-sm-2 col-sm-2 control-label">Email</label>
+                              <label class="col-sm-2 col-sm-2 control-label">Konfirmasi Password</label>
                               <div class="col-sm-4">
-                                <?php if($this->session->userdata("status") != 'login'): ?>
-                                  <input class="form-control round-form" autofocus type="text" f>
-                                <?php elseif($this->session->userdata("status") == 'login'):?>
-                                  <p class="form-control round-form"><?php echo $this->session->userdata("email"); ?></p>
-                                <?php endif;?>
+                                  <input class="form-control round-form" name="pkonf" autofocus type="password" required>
                               </div>
                           </div>
                           <div class="form-group">
-                              <label class="col-sm-2 col-sm-2 control-label">Message</label>
-                              <div class="col-sm-6">
-                                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Input Message Here"></textarea>
+                              <label class="col-sm-2 col-sm-2 control-label">Password Baru</label>
+                              <div class="col-sm-4">
+                                  <input class="form-control round-form" name="pbaru" autofocus type="password" required>
                               </div>
                           </div>
-                          <button type="submit" class="btn btn-theme">Send Message</button>
+                          <div class="text-success"> <?php if($this->session->flashdata('ubahpass')){echo $this->session->flashdata('ubahpass');}?></div>
+                          <div class="text-danger"> <?php if($this->session->flashdata('konfgagal')){echo $this->session->flashdata('konfgagal');}?></div>
+                          <div class="text-danger"> <?php if($this->session->flashdata('dbgagal')){echo $this->session->flashdata('dbgagal');}?></div>
+                          <button type="submit" class="btn btn-theme">Submit</button>
                       </form>
                   </div>
           		</div><!-- col-lg-12-->

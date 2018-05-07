@@ -25,7 +25,9 @@
 
     <script src="<?php echo base_url();?>assets/js/chart-master/Chart.js"></script>
 
-    
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" href="http://prjperpus.epizy.com/favicon.ico?v=2" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -186,10 +188,12 @@
                 </ul>
                 <!--  notification end -->
             </div>
+            <?php if ($this->session->userdata('status')): ?>
             <div class="top-menu">
               <ul class="nav pull-right top-menu">
                     <li><a class="logout" href="<?php echo base_url('Login/Logout'); ?>">Logout</a></li>
               </ul>
             </div>
+            <?php endif;?>
         </header>
       <!--header end-->

@@ -30,7 +30,13 @@
       public function aksi_login(){
     		$email = $this->input->post('email');
     		$password = $this->input->post('password');
+        $nomor = $this->action->getNomorLogin($email);
 	      $username = $this->action->getNamaLogin($email);
+        $gbrpath = $this->action->getPathLogin($email);
+        $emaillogin = $this->action->getEmailLogin($email);
+        $upload_stats = $this->action->getStats($email);
+        // var_dump($gbrpath);
+        // die();
 
     		$where = array(
     			'Email' => $email,
@@ -40,16 +46,21 @@
 
     		if($cek > 0){
     			$data_session = array(
+            'nomor' => $nomor,
     				'nama' => $username,
+            'path' => $gbrpath,
+            'email' => $emaillogin,
+            'status_upload' => $upload_stats,
     				'status' => "login"
     				);
 
-    			$this->session->set_userdata($data_session);
+  			$this->session->set_userdata($data_session);
 
-    			redirect(base_url("main"));
+  			redirect(base_url("main"));
 
     		}else{
-    			echo "Email dan password salah !";
+          $this->session->set_flashdata('gagal', 'Email atau password salah !');
+          redirect('Login');
     		}
     	}
     }

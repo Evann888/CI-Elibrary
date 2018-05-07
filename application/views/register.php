@@ -103,10 +103,13 @@
 		<div class="section section-basic">
 	    	<div class="container">
           <div class="title">
-              <h2>Data Anggota Perpustakaan</h2>
+              <h2>Pendaftaran Anggota Perpustakaan</h2>
+								<span class="text-danger"><?php echo validation_errors(); ?> </span>
+							<?php if($this->session->flashdata('error')){echo $this->session->flashdata('error');}?>
           </div>
 
-			<?php echo form_open('register/input'); ?>
+
+				<?php echo form_open_multipart('Register/input');?>
 					<div class="col-sm-3">
 						<div class="form-group label-floating">
 				      <label class="control-label">Nama </label>
@@ -121,13 +124,6 @@
 						</div>
 					</div>
 
-					<div class="col-sm-offset-1 col-sm-3">
-						<div class="form-group label-floating pgbar">
-							<label class="control-label">Tanggal Lahir </label>
-		 					<input type="date" name="tgl" placeholder="dd-mm-yyyy" pattern="\d{1,2}-\d{1,2}-\d{4}">
-						</div>
-					</div>
-
 					<div class="col-sm-offset-2 col-sm-3">
 						<div class="form-group label-floating pgbar">
 							<label class="control-label">NIK </label>
@@ -135,7 +131,7 @@
 						</div>
 					</div>
 
-					<div class="col-sm-offset-1 col-sm-3">
+					<div class="col-sm-offset-2 col-sm-3">
 						<div class="form-group label-floating pgbar">
 							<label class="control-label">Nomor Handphone </label>
 							<input type="text" class="form-control pgbar" name="nohp" required>
@@ -144,20 +140,19 @@
 
 					<div class="col-sm-offset-2 col-sm-3">
 						<div class="form-group label-floating pgbar">
-							<?php echo validation_errors(); ?>
 							<label class="control-label">Email</label>
 							<input type="email" class="form-control pgbar" name="email" >
 						</div>
 					</div>
 
-					<div class="col-sm-offset-1 col-sm-3">
+					<div class="col-sm-offset-4 col-sm-3">
 						<div class="form-group label-floating pgbar">
 							<label class="control-label">Password </label>
 							<input type="password" class="form-control pgbar" name="password" required>
 						</div>
 					</div>
 
-					<div class="col-sm-4"><br>
+					<div class="col-sm-offset-2 col-md-6"><br>
 						<label class="">Jenis Kelamin</label>
 						 <div class="radio">
 							 <label>
@@ -171,12 +166,26 @@
 						 </div>
 				 </div>
 
+ 					<div class="col-md-3">
+ 						<div class="form-group pgbar">
+ 							<label class="control-label">Tanggal Lahir </label>
+							<!-- <input id="BD" class="datepicker form-control" name="tgl" type="text" value="" >> -->
+							<input required type="date" id="tanggal" name="tgl" placeholder="mm-dd-yyyy" pattern="\d{1,2}-\d{1,2}-\d{4}" min='' max=''>
+ 						</div>
+ 					</div>
+
+					<div class="col-md-3">
+						<label class="control-label">Upload foto(jpg,png,jpeg | tidak wajib)</label>
+							<input type="file" name="gambar">
+					</div>
+
 				 <div class="row">
-					 <div class="text-center col-md-11">
-							 <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+					 <div class="text-center col-md-12">
+							 <button type="submit" value="upload" class="btn btn-primary" name="submit">Submit</button>
 					 </div>
 				 </div>
-			 <?php echo form_close(); ?>
+
+		<?php echo form_close(); ?>
 
 				 <script>
 					 function test(){
@@ -250,6 +259,28 @@
 	</footer>
 
 </body>
+
+<script>
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+	 if(dd<10){
+					dd='0'+dd
+			}
+			if(mm<10){
+					mm='0'+mm
+			}
+
+	today = yyyy+'-'+mm+'-'+dd;
+	var mintoday = (yyyy-0020); //kurangin 16 thn gatau kenapa
+	var minyear = mintoday+'-'+mm+'-'+dd;
+	// document.getElementById("tanggal").setAttribute("max", today);
+
+	document.getElementById("tanggal").setAttribute("max", minyear);
+	// document.getElementById("tanggal").setAttribute("min", minyear);
+</script>
+
 	<!--   Core JS Files   -->
 	<script src="<?php echo base_url();?>assets/js/jquery.min.js" type="text/javascript"></script>
 	<script src="<?php echo base_url();?>assets/js/bootstrap.min.js" type="text/javascript"></script>

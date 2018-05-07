@@ -5,7 +5,7 @@
   <!--main content start-->
   <section id="main-content">
       <section class="wrapper">
-
+  <h1 class="main-heading-title">We are<span class="main-element themecolor" data-elements=" Information Technology, FTIK, ITS"></span></h1>
 
 
               </div><!-- /col-lg-3 -->
