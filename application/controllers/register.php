@@ -28,8 +28,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     $config['max_width']            = 2000;
     $config['max_height']           = 1500;
 
-    $is_upload = 0; $ext ='';
-   if ($_FILES['gambar']['error'] <> 4) { //supaya upload tidak required 4 => ‘No file was uploaded’,
+    $is_upload = 0; $ext =''; $defaultPath ="";
+   if ($_FILES['gambar']['error'] != 4) { //supaya upload tidak required 4 => ‘No file was uploaded’,
       $this->load->library('upload', $config);
       if (!$this->upload->do_upload('gambar')){
         $error = array('error' => $this->upload->display_errors());
@@ -37,10 +37,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         redirect('register','refresh');
       }else{
         $z = $this->upload->data();
-        $ext = $z['image_type'];
-        $ext = strtoupper($ext); //uppercase karena hostingan mengharuskan
+        $ext =strtolower(pathinfo($_FILES['gambar']["name"],PATHINFO_EXTENSION));;
         $is_upload = 1;
       }
+    }  else{ //berarti gambar tidak diuploads
+      $defaultPath = "defaultuser.png";
     }
 
     $data = array(
@@ -54,12 +55,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       'No_HP' => $this->input->post('nohp'),
       'Path' => $config['file_name'].'.'.$ext,
       'is_upload' => $is_upload,
-      'date' => date("Y-m-d")
+      'date' => date("Y-m-d"),
+      "DefaultPath" => $defaultPath
     );
 
-
-    // valid_email
-    $this->form_validation->set_rules('email', 'Email', 'required|is_unique[anggota.Email]');
+    $this->form_validation->set_rules('email', 'Email', 'required|is_unique[anggota.Email]|valid_email');
     $this->form_validation->set_rules('nik', 'NIK', 'required|numeric|min_length[16]|max_length[16]');
     $this->form_validation->set_rules('nohp', 'Nomor HP', 'required|numeric');
 

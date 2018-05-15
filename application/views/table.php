@@ -3,7 +3,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jszip-2.5.0/dt-1.10.16/b-1.5.1/b-html5-1.5.1/cr-1.4.1/fh-3.1.3/kt-2.3.2/r-2.2.1/rg-1.0.2/rr-1.2.3/sc-1.4.4/sl-1.2.5/datatables.min.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <body>
   <section id="container" >
@@ -50,7 +50,7 @@
                                         <td  data-title="Stok"><?php echo $u->Stok ?></td>
                                         <td  data-title="Gambar">
                                         <?php if($u->DefaultPath == "blankbook.PNG"): ?>
-                                          <img src="<?php echo base_url('gambar/Buku/').$u->DefaultPath;?>" width="60px" height="50px"></td>
+                                          <img src="<?php echo base_url('gambar/Buku/blankbook.png')?>" width="60px" height="50px"></td>
                                         <?php else :?>
                                           <img src="<?php echo base_url('gambar/Buku/').$u->Path;?>" width="60px" height="50px"></td>
                                         <?php endif?>
@@ -59,11 +59,11 @@
                                           <i class="glyphicon glyphicon-trash"></i> Delete
                                         </button></a> -->
                                         <button id="edit_button" data-toggle="modal" data-target="#edit"
-                                        data-id="<?php echo $u->ID?>"
-                                        data-isbn="<?php echo $u->ISBN?>" data-judul="<?php echo $u->Judul_Buku?>"
-                                        data-pengarang="<?php echo $u->Pengarang?>" data-penerbit="<?php echo $u->Penerbit ?>"
-                                        data-kategori="<?php echo $u->Kategori ?>" data-stok="<?php echo $u->Stok?>"
-                                        type="button" class="btn btn-success">
+                                          data-id="<?php echo $u->ID?>"
+                                          data-isbn="<?php echo $u->ISBN?>" data-judul="<?php echo $u->Judul_Buku?>"
+                                          data-pengarang="<?php echo $u->Pengarang?>" data-penerbit="<?php echo $u->Penerbit ?>"
+                                          data-kategori="<?php echo $u->Kategori ?>" data-stok="<?php echo $u->Stok?>"
+                                          type="button" class="btn btn-success">
                                           <i class="glyphicon glyphicon-edit"></i> Edit
                                         </button>
                                         <a href="Table/Delete/<?php echo ($u->ID) ?>">
@@ -80,9 +80,15 @@
                                 <!-- Button trigger modal onclick="tambahBuku()" -->
 
                           			<span class="text-danger"><?php echo validation_errors(); ?> </span>
-                              	<span class="text-danger"><?php if($this->session->flashdata('error')){echo $this->session->flashdata('error');}?> </span>
-                              	<div class="text-success"> <?php if($this->session->flashdata('sukses')){echo $this->session->flashdata('sukses');}?></div>
-                                <div class="text-danger"><?php if($this->session->flashdata('hapus')){echo $this->session->flashdata('hapus');}?> </div>
+                                <?php if($this->session->flashdata('error')) : ?>
+                                  <div class="alert alert-warning alert-dismissable"> <?php echo $this->session->flashdata('error');?></div>
+                                <?php endif; ?>
+                              	<?php if($this->session->flashdata('sukses')) : ?>
+                                   <div class="alert alert-success alert-dismissable"> <?php echo $this->session->flashdata('sukses');?></div>
+                               <?php endif; ?>
+                               <?php if($this->session->flashdata('hapus')) : ?>
+                                 <div class="alert alert-success alert-dismissable"> <?php echo $this->session->flashdata('hapus');?></div>
+                               <?php endif; ?>
                                 <button type="button" class="btn btn-theme03" data-toggle="modal" data-target="#tambah">
                                   Tambah Buku
                                 </button>

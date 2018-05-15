@@ -17,7 +17,7 @@
 
         $data['buku'] = $this->action->get_data('buku')->result();
         $this->load->view('table',$data);
-        // $this->load->view('table',$data);
+       // var_dump($data['buku']["0"]); die;
 
         // if($this->session->userdata('status') != "admin"){
         //     redirect(base_url("login"));
@@ -28,7 +28,7 @@
 
       public function tambah()
       {
-        $judul = $this->input->post('judul');
+        $judul = str_replace(' ', '_', $this->input->post('judul')); //soalnya kalo spasi jadi _ di file
         $namafile = $judul."_".time();
         $config['file_name']            = $namafile;
         $config['upload_path']          = './gambar/Buku';
@@ -38,19 +38,39 @@
         $config['max_height']           = 1500;
 
         $is_upload = 0; $ext =''; $defaultPath ="";
-       if ($_FILES['gambar']['error'] <> 4) { //supaya upload tidak required 4 => ‘No file was uploaded’,
-          $this->load->library('upload', $config);
-          if (!$this->upload->do_upload('gambar')){
-            $error = array('error' => $this->upload->display_errors());
-            $this->session->set_flashdata('error',$error['error']);
-            $defaultPath = "blankbook.PNG";
-            redirect('table','refresh');
-          }else{
-            $z = $this->upload->data();
-            $ext = $z['image_type'];
-            $ext = strtoupper($ext); //uppercase karena hostingan mengharuskan
-            $is_upload = 1;
-          }
+        // echo $_FILES['gambar']['error']; die();
+       if ($_FILES['gambar']['error'] != 4) { //supaya upload tidak required 4 => ‘No file was uploaded’,
+           $this->load->library('upload', $config);
+           if (!$this->upload->do_upload('gambar')){
+             $error = array('error' => $this->upload->display_errors());
+             $this->session->set_flashdata('error',$error['error']);
+             redirect('table','refresh');
+           }else{
+             $z = $this->upload->data();
+             // Resize
+
+             $config['image_library'] = 'gd2';
+             $config['source_image'] =  $z['full_path'];
+             $config['maintain_ratio'] = false;
+             $config['width']  = 1024;
+             $config['height'] = 1024;
+
+             $this->load->library('image_lib', $config);
+
+             $this->image_lib->resize();
+
+
+             $ext =strtolower(pathinfo($_FILES['gambar']["name"],PATHINFO_EXTENSION));;
+             // $ext = $z['image_type'];
+             // $ext = strtoupper($ext); //uppercase karena hostingan mengharuskan
+             $is_upload = 1;
+           }
+
+         // $error = array('error' => $this->upload->display_errors());
+         // $this->session->set_flashdata('error',$error['error']);
+         // redirect('table','refresh');
+        } else{ //berarti gambar tidak diuploads
+          $defaultPath = "blankbook.PNG";
         }
 
         $data = array(
@@ -91,27 +111,42 @@
             'rules' => 'trim|required|max_length[30]|numeric'
           )
         );
-       // redirect(base_url("login/index_cont"));
-       $this->form_validation->set_rules($config);
-       $this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
-       $validator = array('success' => false , 'messages' => array());
+       $this->form_validation->set_rules($config);
+       // $this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+       $query = $this->db->get_where('buku', array(
+                   'ISBN' => $this->input->post('isbn')
+               ));
+       $count = $query->num_rows();
+
+       if($count){
+            $this->session->set_flashdata('error', 'ISBN telah terdaftar');
+            redirect('Table');
+       }
+
+       // $validator = array('success' => false , 'messages' => array());
        if($this->form_validation->run() === TRUE){
          $insert_Book = $this->action->insert_record("buku",$data);
          	$this->session->set_flashdata('class', 'danger');
          // var_dump($insert_Book); die();
-         if($insert_Book == true){
-            // $validator['success'] = true;
-            // $validator['messages'] = "Data sukses ditambahkan";
-           	$this->session->set_flashdata('sukses', 'Data Sukses Ditambahkan');
-            redirect('Table');
-            // var_dump($validator);
+         try{
+           if($insert_Book == true){
+              // $validator['success'] = true;
+              // $validator['messages'] = "Data sukses ditambahkan";
+              $this->session->set_flashdata('sukses', 'Data Sukses Ditambahkan');
+              redirect('Table');
+              // var_dump($validator);
+           }  else{
+          	 $this->session->set_flashdata('error', validation_errors());
+             redirect('Table');
+              // $validator['success'] = false;
+              // $validator['messages'] = "Data gagal ditambahkan";
+            }
+         } catch(Exception $e){ //biar gak ke default primary key db_debug di conf database, tapi gabisa
+               $this->session->set_flashdata('error', 'Such User exists. Please try again!');
+               redirect('Table');
          }
-         //  else{
-         //   $validator['success'] = false;
-         //   $validator['messages'] = "Data gagal ditambahkan";
-         // }
-         // $this->load->view('register');
        }else{
        	 $this->session->set_flashdata('error', validation_errors());
          redirect('Table');
@@ -132,7 +167,7 @@
 
       function edit()
       {
-        $judul = $this->input->post('judul');
+        $judul = str_replace(' ', '_', $this->input->post('judul'));
         $namafile = $judul."_".time();
         $config['file_name']            = $namafile;
         $config['upload_path']          = './gambar/Buku';
@@ -142,19 +177,30 @@
         $config['max_height']           = 1500;
 
         $is_upload = 0; $ext =''; $defaultPath ="";
-       if ($_FILES['gambar2']['error'] <> 4) { //supaya upload tidak required 4 => ‘No file was uploaded’,
+       if ($_FILES['gambar2']['error'] != 4) { //supaya upload tidak required 4 => ‘No file was uploaded’,
           $this->load->library('upload', $config);
           if (!$this->upload->do_upload('gambar2')){
             $error = array('error' => $this->upload->display_errors());
             $this->session->set_flashdata('error',$error['error']);
-            $defaultPath = "blankbook.PNG";
-            // redirect('table','refresh');
+            redirect('table','refresh');
           }else{
             $z = $this->upload->data();
-            $ext = $z['image_type'];
-            $ext = strtoupper($ext); //uppercase karena hostingan mengharuskan
+
+            $config['image_library'] = 'gd2';
+            $config['source_image'] =  $z['full_path'];
+            $config['maintain_ratio'] = false;
+            $config['width']  = 1024;
+            $config['height'] = 1024;
+
+            $this->load->library('image_lib', $config);
+
+            $this->image_lib->resize();
+            
+            $ext =strtolower(pathinfo($_FILES['gambar2']["name"],PATHINFO_EXTENSION));;
             $is_upload = 1;
           }
+        }  else{ //berarti gambar tidak diuploads
+          $defaultPath = "blankbook.PNG";
         }
 
         $data = array(

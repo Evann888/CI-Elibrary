@@ -63,7 +63,7 @@
                                           <i class="glyphicon glyphicon-edit"></i> Edit
                                         </button>
 
-                                        <a href="Table/Delete/<?php echo ($u->Nama) ?>">
+                                        <a href="User/Delete/<?php echo ($u->Nomor) ?>">
                                         <button id="b" type="button" class="btn btn-danger">
                                           <i class="glyphicon glyphicon-trash"></i> Delete
                                         </button>
@@ -77,9 +77,15 @@
                                 <!-- Button trigger modal onclick="tambahBuku()" -->
 
                                 <span class="text-danger"><?php echo validation_errors(); ?> </span>
-                                <span class="text-danger"><?php if($this->session->flashdata('error')){echo $this->session->flashdata('error');}?> </span>
-                                <div class="text-success"> <?php if($this->session->flashdata('sukses')){echo $this->session->flashdata('sukses');}?></div>
-                                <div class="text-danger"><?php if($this->session->flashdata('hapus')){echo $this->session->flashdata('hapus');}?> </div>
+                                <?php if($this->session->flashdata('error')) : ?>
+                                  <div class="alert alert-warning alert-dismissable"> <?php echo $this->session->flashdata('error');?></div>
+                                <?php endif; ?>
+                                <?php if($this->session->flashdata('sukses')) : ?>
+                                   <div class="alert alert-success alert-dismissable"> <?php echo $this->session->flashdata('sukses');?></div>
+                               <?php endif; ?>
+                               <?php if($this->session->flashdata('hapus')) : ?>
+                                 <div class="alert alert-success alert-dismissable"> <?php echo $this->session->flashdata('hapus');?></div>
+                               <?php endif; ?>
                                 <button type="button" class="btn btn-theme03" data-toggle="modal" data-target="#tambah">
                                   Tambah User
                                 </button>

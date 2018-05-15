@@ -9,9 +9,9 @@ MAIN SIDEBAR MENU
             <?php if($this->session->userdata("status") == 'login'): ?>
               <h3 class="centered" style="color:white">Selamat Datang</h3>
               <a href="main/toProfile"> <h5 class="centered"> <?php echo $this->session->userdata("nama"); ?></h5> </a>
-              <?php if($this->session->userdata("status_upload") == 1): ?>
-                <p class="centered"><a href="main/toProfile"><img src="<?php echo base_url('gambar/User/').$this->session->userdata("path");?>" class="img-circle" height="100" width="120"></a></p>
-              <?php endif;?>
+                <p class="centered"><a href="main/toProfile"><img src="
+                <?php if($this->session->userdata("DefaultPath") == "defaultuser.png"){echo base_url('gambar/User/').$this->session->userdata("DefaultPath");}
+                else{echo base_url('gambar/User/').$this->session->userdata("path");}?>" class="img-circle" height="100" width="120"></a></p>
             <?php endif;?>
 
             <li class="mt">
@@ -21,7 +21,7 @@ MAIN SIDEBAR MENU
                 </a>
             </li>
 
-            <li class="sub-menu">
+            <!-- <li class="sub-menu">
                 <a href="javascript:;" >
                     <i class="fa fa-desktop"></i>
                     <span>Display</span>
@@ -30,7 +30,7 @@ MAIN SIDEBAR MENU
                     <li><a  href="main/toCalendar">Calendar</a></li>
                     <li><a  href="main/toGallery">Gallery</a></li>
                 </ul>
-            </li>
+            </li> -->
             <li class="sub-menu">
                 <a href="javascript:;" >
                     <i class="fa fa-book"></i>
@@ -47,18 +47,19 @@ MAIN SIDEBAR MENU
                     <span>Katalog Buku</span>
                 </a>
             </li>
-            <li class="sub-menu">
+            <!-- <li class="sub-menu">
                 <a href="main/toContact" >
                     <i class="fa fa-tasks"></i>
                     <span>Contact Us</span>
                 </a>
-            </li>
+            </li> -->
             <li class="sub-menu">
                 <a href="main/toStatistik" >
             <i class="fa fa-check" style="font-size:24px"></i>
                     <span>Statistik</span>
                 </a>
             </li>
+            <?php if($this->session->userdata("admin") == 1): ?>
             <li class="sub-menu">
                 <a href="main/toAdmin" >
                     <i class="fa fa-cogs"></i>
@@ -67,8 +68,10 @@ MAIN SIDEBAR MENU
                 <ul class="sub">
                     <li><a  href="main/toTable">Managemen Buku</a></li>
                     <li><a  href="main/toUser">Managemen User</a></li>
-                    <li><a  href="main/toNotif">Kirim Notifikasi</a></li>
+                    <li><a  href="main/toTablePinjam">Managemen Pinjaman</a></li>
+                    <li><a  href="main/toContact">Kirim Notifikasi</a></li>
                 </ul>
+              <?php endif;?>
             </li>
 
         </ul>
@@ -86,7 +89,6 @@ MAIN SIDEBAR MENU
     <script src="<?php echo base_url();?>assets/js/jquery.scrollTo.min.js"></script>
     <script src="<?php echo base_url();?>assets/js/jquery.nicescroll.js" type="text/javascript"></script>
     <script src="<?php echo base_url();?>assets/js/jquery.sparkline.js"></script>
-
 
     <!--common script for all pages-->
     <script src="<?php echo base_url();?>assets/js/common-scripts.js"></script>

@@ -26,16 +26,15 @@
 		            <label class="checkbox">
 		                <span class="pull-right">
 		                    <a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a>
-
 		                </span>
 		            </label>
 		            <button class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
         		 <?php echo form_close(); ?>
 		            <hr>
+                <div class="text-danger"><?php if($this->session->flashdata('gagal')){echo $this->session->flashdata('gagal');}?> </div>
 
 		            <div class="login-social-link centered">
 		            <p>or you can sign in via your social network</p>
-                <div class="text-danger"><?php if($this->session->flashdata('gagal')){echo $this->session->flashdata('gagal');}?> </div>
 		                <button class="btn btn-facebook" type="submit"><i class="fa fa-facebook"></i> Facebook</button>
 		                <button class="btn btn-twitter" type="submit"><i class="fa fa-twitter"></i> Twitter</button>
 		            </div>
@@ -59,7 +58,6 @@
 		                      <div class="modal-body">
 		                          <p>Enter your e-mail address below to reset your password.</p>
 		                          <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
-
 		                      </div>
 		                      <div class="modal-footer">
 		                          <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
@@ -85,7 +83,7 @@
     <script>
         $.backstretch("assets/img/login-bg.jpg", {speed: 500});
     </script>
-
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 
   </body>
 </html>

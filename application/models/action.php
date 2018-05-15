@@ -12,6 +12,13 @@
       return $this->db->get($table);
     }
 
+    public function get_9_data($table)
+    {
+      $this->db->order_by('ID', 'DESC');
+      $this->db->limit(9);
+      return $this->db->get($table);
+    }
+
     public function insert_record($table,$data){
       $sql = $this->db->insert($table, $data);
       if($sql === true){
@@ -38,9 +45,9 @@
   	}
 
     // -----------------------USER-------------------------
-    public function delete_user($table,$Nama)
+    public function delete_user($table,$Nomor)
     {
-      $query =$this->db->query('Delete FROM '.$table." Where Nama = '$Nama'");
+      $query =$this->db->query('Delete FROM '.$table." Where Nomor = '$Nomor'");
     }
 
     public function update_user($data,$where,$table){
@@ -67,6 +74,12 @@
       return $query->row()->Path;
     }
 
+    function getDefPathLogin($email)
+    {
+      $query = $this->db->query("SELECT DefaultPath FROM anggota WHERE Email = '$email'");
+      return $query->row()->DefaultPath;
+    }
+
     function getEmailLogin($email)
     {
       $query = $this->db->query("SELECT Email FROM anggota WHERE Email = '$email'");
@@ -90,6 +103,12 @@
       $query = $this->db->query("SELECT Password FROM anggota WHERE Nomor = '$nomor'");
       return $query->row()->Password;
     }
+
+    function getAdminStats($email)
+    {
+      $query = $this->db->query("SELECT is_admin FROM anggota WHERE Email = '$email'");
+      return $query->row()->is_admin;
+    }
     // -----------------------Halaman-------------------------
     function getNamaLogin($email)
     {
@@ -108,6 +127,39 @@
       }
       return $hasil;
       }
+    }
+
+    // -----------------------Pinjam-------------------------
+    public function get_data_where($table,$email){
+      return $this->db->get_where($table,array("Email" => $email));
+    }
+
+    public function update_datapinjam($data,$isbn,$nama,$datetime,$table){
+      $sql = $this->db->where('ISBN= ', $isbn);
+      $sql = $this->db->where('Nama= ', $nama);
+      $sql = $this->db->update($table,$data);
+    // echo $this->db->last_query(); die;
+      return true;
+    }
+
+    public function delete_pinjaman($table,$ID)
+    {
+      $query =$this->db->query('DELETE FROM '.$table." Where ID = '$ID'");
+    }
+
+    public function join_2_tabel($table,$join_table,$nama,$judul)
+    {
+      $query =$this->db->query("SELECT * FROM $table JOIN $join_table
+      ON buku.ISBN = pinjaman.ISBN Where Nama = '$nama' and pinjaman.Judul_Buku = '$judul' and is_upload = 1");
+
+      if($query->num_rows() >= 1)
+       {
+           return FALSE;
+       }
+       else
+       {
+           return TRUE;
+       }
     }
   }
  ?>

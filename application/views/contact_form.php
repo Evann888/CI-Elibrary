@@ -25,7 +25,7 @@
                               <label class="col-sm-2 col-sm-2 control-label">Email</label>
                               <div class="col-sm-4">
                                 <?php if($this->session->userdata("status") != 'login'): ?>
-                                  <input class="form-control round-form" autofocus type="text" f>
+                                  <input name ="emailuser" class="form-control round-form" autofocus type="text">
                                 <?php elseif($this->session->userdata("status") == 'login'):?>
                                   <p class="form-control round-form"><?php echo $this->session->userdata("email"); ?></p>
                                 <?php endif;?>

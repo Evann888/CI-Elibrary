@@ -14,13 +14,48 @@
       {
         $this->load->view('t_header');
         $this->load->view('t_sidebar');
-        $this->load->view('main');
+        $data['buku'] = $this->action->get_9_data('buku')->result();
+        $this->load->view('main',$data);
         $this->load->view('t_footer');
       }
 
-      public function toCalendar()
+      public function booking()
       {
-        redirect(base_url("calendar"));
+        $nama = $this->input->post('nama'); $judul= $this->input->post('judul');//dari session
+
+        $data = array(
+          'ISBN' => $this->input->post('isbn'),
+          'Judul_Buku' => $judul,
+          'is_booking' => 1,
+          'Nama' => $nama,
+          'Email' => $this->input->post('email'),
+          "Tanggal_Booking" => date('Y-m-d'),
+          "Hari" => $this->input->post('hari'),
+          "Status" => "Menunggu Konfirmasi"
+        );
+
+        if($this->session->userdata("status") == 'login'){
+          if($this->action->join_2_tabel("buku","pinjaman",$nama,$judul) == TRUE){
+             if($this->action->insert_record("pinjaman",$data) == TRUE){
+               redirect('Pinjam');
+             }else{
+               $this->session->set_flashdata('error', validation_errors());
+               redirect('Main');
+               // $this->index()
+             }
+           } else{
+             $this->session->set_flashdata('error', 'Buku telah dibooking');
+             redirect('Main');
+           }
+         }else{
+           $this->session->set_flashdata('gagal', 'Anda perlu login dahulu untuk meminjam buku');
+           redirect('Login');
+         }
+        }
+
+        public function toCalendar()
+        {
+          redirect(base_url("calendar"));
       }
 
       public function toGallery()
@@ -41,6 +76,11 @@
       public function toTable()
       {
         redirect(base_url("table"));
+      }
+
+      public function toTablePinjam()
+      {
+        redirect(base_url("tablepinjam"));
       }
 
       public function toTableBukuUser()
@@ -71,6 +111,11 @@
       public function toProfile()
       {
         redirect(base_url("profile"));
+      }
+
+      public function toPinjam()
+      {
+        redirect(base_url("pinjam"));
       }
 
 

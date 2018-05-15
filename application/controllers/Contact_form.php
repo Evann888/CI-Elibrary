@@ -25,7 +25,7 @@
                           'mailpath'  => '/usr/sbin/sendmail',
                           'smtp_host' => 'ssl://smtp.gmail.com',
                           'smtp_user' => 'glhf3033@gmail.com',
-                          'smtp_pass' => 'qwas1234',
+                          'smtp_pass' => 'qwer1212',
                           'smtp_port' => 465,
                           'smtp_keepalive' => TRUE,
                           'smtp_crypto' => 'SSL',
@@ -38,9 +38,12 @@
                           'newline'   => "\r\n",
           );
 
+          $emailuser = $this->input->post("emailuser");
+          var_dump($emailuser); die();
+
           $this->load->library('email',$config);
           $this->email->set_newline("\r\n");
-          $this->email->from('glhf3033@gmail.com','admin');
+          $this->email->from($emailuser,'Pengguna Website GRII Kertajaya');
           $this->email->to('evann888@gmail.com');
           $this->email->subject('Test');
           $this->email->message('Ini adalah contoh email yang dikirim melalui localhost pada CodeIgniter menggunakan SMTP email Google (Gmail).');

@@ -121,15 +121,13 @@
        }
       }
 
-      function delete($nama)
+      function delete($nomor)
       {
         // echo $id;
         $nama = $this->uri->segment(3);
-        $this->action->delete_user('anggota',$nama);
-        // redirect('Table');
-        // if($id){
-        //
-        // }
+        $this->action->delete_user('anggota',$nomor);
+        $this->session->set_flashdata('hapus', 'Data Sukses dihapus');
+        redirect('User');
       }
     }
 ?>

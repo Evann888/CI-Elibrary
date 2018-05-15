@@ -50,7 +50,7 @@ link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jszi
                                         <td  data-title="Stok"><?php echo $u->Stok ?></td>
                                         <td  data-title="Gambar">
                                         <?php if($u->DefaultPath == "blankbook.PNG"): ?>
-                                          <img src="<?php echo base_url('gambar/Buku/').$u->DefaultPath;?>" width="60px" height="50px"></td>
+                                          <img src="<?php echo base_url('gambar/Buku/blankbook.png')?>" width="60px" height="50px"></td>
                                         <?php else :?>
                                           <img src="<?php echo base_url('gambar/Buku/').$u->Path;?>" width="60px" height="50px"></td>
                                         <?php endif?>

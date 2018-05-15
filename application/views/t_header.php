@@ -6,6 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <meta name="theme-color" content="#999999" />
 
     <title>GRII Kertajaya - elibrary</title>
 
@@ -14,7 +15,6 @@
 
     <!--external css-->
     <link href="<?php echo base_url();?>assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/zabuto_calendar.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/js/gritter/css/jquery.gritter.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/lineicons/style.css">
 
