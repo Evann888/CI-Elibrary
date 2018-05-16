@@ -33,11 +33,11 @@
     		$password = trim(htmlspecialchars($this->input->post('password'),ENT_QUOTES));
         // var_dump($gbrpath);
         // die();
-        // $captcha_response = $this->input->post('g-recaptcha-response');
-        // $url = 'https://www.google.com/recaptcha/api/siteverify';
-        // $secretkey = '6LcvOVgUAAAAANYRD1SRiDxCc9MHnG7qQdS-C5Gc';
-        // $response = file_get_contents($url."?secret=".$secretkey."&response=".$captcha_response);
-        // $data = json_decode($response);
+        $captcha_response = $this->input->post('g-recaptcha-response');
+         $url = 'https://www.google.com/recaptcha/api/siteverify';
+         $secretkey = '6LerslkUAAAAAPsZyZ4202jCv6BALaldACceBze1';
+         $response = file_get_contents($url."?secret=".$secretkey."&response=".$captcha_response);
+         $data = json_decode($response);
 
 
     		// $where = array(
@@ -51,29 +51,34 @@
           $decodepass = $this->encrypt->decode($passlogin);
           $inputpass = $this->input->post('password');
 
-          if($decodepass==$inputpass){
-            $nomor = $this->action->getNomorLogin($email);
-            $username = $this->action->getNamaLogin($email);
-            $gbrpath = $this->action->getPathLogin($email);
-            $gbrdefpath = $this->action->getDefPathLogin($email);
-            $emaillogin = $this->action->getEmailLogin($email);
-            $upload_stats = $this->action->getStats($email);
-            $is_admin = $this->action->getAdminStats($email);
+          if(isset($data->success) && $data->success =="true"){
+            if($decodepass==$inputpass){
+              $nomor = $this->action->getNomorLogin($email);
+              $username = $this->action->getNamaLogin($email);
+              $gbrpath = $this->action->getPathLogin($email);
+              $gbrdefpath = $this->action->getDefPathLogin($email);
+              $emaillogin = $this->action->getEmailLogin($email);
+              $upload_stats = $this->action->getStats($email);
+              $is_admin = $this->action->getAdminStats($email);
 
-            $data_session = array(
-              'nomor' => $nomor,
-              'nama' => $username,
-              'path' => $gbrpath,
-              'DefaultPath' => $gbrdefpath,
-              'email' => $emaillogin,
-              'status_upload' => $upload_stats,
-              "admin" => $is_admin,
-              'status' => "login"
-              );
-          $this->session->set_userdata($data_session);
-          redirect(base_url("main"));
+              $data_session = array(
+                'nomor' => $nomor,
+                'nama' => $username,
+                'path' => $gbrpath,
+                'DefaultPath' => $gbrdefpath,
+                'email' => $emaillogin,
+                'status_upload' => $upload_stats,
+                "admin" => $is_admin,
+                'status' => "login"
+                );
+            $this->session->set_userdata($data_session);
+            redirect(base_url("main"));
+            }else{
+              $this->session->set_flashdata('gagal', 'Email atau Password Salah');
+              redirect('Login');
+            }
           }else{
-            $this->session->set_flashdata('gagal', 'Email atau Password Salah');
+            $this->session->set_flashdata('gagal', 'Silahkan mengisi Data dan CAPTCHA dengan tepat');
             redirect('Login');
           }
         // } else{

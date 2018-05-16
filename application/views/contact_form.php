@@ -26,6 +26,7 @@
                               <label class="col-sm-2 col-sm-2 control-label">Email</label>
                               <div class="col-sm-4">
                                   <input name="emailuser" class="form-control round-form" type="text">
+                              </div>
                           </div>
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Message</label>
@@ -33,6 +34,7 @@
                                   <textarea name="msg" lass="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Input Message Here"></textarea>
                               </div>
                           </div>
+                          <?php echo $this->session->flashdata('berhasil') ?>
                           <button type="submit" class="btn btn-theme">Send Message</button>
                       </form>
                   </div>

@@ -130,7 +130,43 @@
 
       function autoMail()
       {
+          $config = array(
+            'useragent' => 'CodeIgniter',
+                          'protocol'  => 'smtp',
+                          'mailpath'  => '/usr/sbin/sendmail',
+                          'smtp_host' => 'ssl://smtp.gmail.com',
+                          'smtp_user' => 'glhf3033@gmail.com',
+                          'smtp_pass' => 'qwer1212',
+                          'smtp_port' => 465,
+                          'smtp_keepalive' => TRUE,
+                          'smtp_crypto' => 'SSL',
+                          'wordwrap'  => TRUE,
+                          'wrapchars' => 80,
+                          'mailtype'  => 'html',
+                          'charset'   => 'utf-8',
+                          'validate'  => TRUE,
+                          'crlf'      => "\r\n",
+                          'newline'   => "\r\n",
+          );
+          $emailuser = trim(htmlspecialchars($this->input->post('emailuser'),ENT_QUOTES));
 
+          $this->load->library('email',$config);
+
+
+          $data['tgl'] = $this->action->get_tgl();
+
+          foreach ($data['tgl'] as $data) {
+            // var_dump($data->Tanggal_Kembali); die();
+            if(date('Y-m-d', strtotime("+ 1days")) == $data->Tanggal_Kembali){
+                $emailjatuhtempo = $data->Email;
+                $this->email->set_newline("\r\n");
+                $this->email->from('glhf3033@gmail.com','Admin Website GRII Kertajaya');
+                $this->email->to($emailjatuhtempo);
+                $this->email->subject('Reminder');
+                $this->email->message('Ada buku yang harus dikembalikan dalam 1 hari');
+                $this->email->send();
+                }
+            }
+        }
       }
-    }
 ?>

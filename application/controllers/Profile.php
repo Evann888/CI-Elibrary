@@ -8,7 +8,8 @@
         $this->load->model('action');
         $this->load->helper('url_helper');
         $this->load->library('form_validation');
-      $this->load->library('session');}
+        $this->load->library('encrypt');
+    }
 
       public function index()
       {
@@ -17,21 +18,26 @@
         $this->load->view('profile');
       }
 
-      function ubahPass()
+      public function ubahPass()
       {
-        $passlama = $this->input->post('plama');
-        $passkonfirmasi = $this->input->post('pkonf');
-        $passbaru = $this->input->post('pbaru');
+        //ambil passs db lalu decrypt
+        $email= $this->session->userdata('email');
+        $passlogin = $this->action->getPassLogin($email);
 
-        $emaillogin = $this->session->userdata("email");
+
+        $passlama = trim(htmlspecialchars($this->input->post('plama'),ENT_QUOTES));
+        $passkonfirmasi = trim(htmlspecialchars($this->input->post('pkonf'),ENT_QUOTES));
+        $passbaru = trim(htmlspecialchars($this->input->post('pbaru'),ENT_QUOTES));
+
         $nomor = $this->session->userdata("nomor");
         $passdb = $this->action->getPassDbNow($nomor);
+        $decodepassdb = $this->encrypt->decode($passlogin);
 
         $data = array(
-          'Password' => $passbaru
+          'Password' =>  $this->encrypt->encode($passbaru)
         );
 
-        if($passlama == $passdb){
+        if($passlama == $decodepassdb){
             if($passlama == $passkonfirmasi){
               $update_pass = $this->action->update_pass($data,$nomor,"anggota");
               if($update_pass == true){

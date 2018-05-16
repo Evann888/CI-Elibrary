@@ -45,14 +45,15 @@
 
           $this->load->library('email',$config);
           $this->email->set_newline("\r\n");
-          $this->email->from($emailuser,'Pengguna Website GRII Kertajaya');
-          $this->email->to('evann888@gmail.com');
-          $this->email->subject('Test');
-          $this->email->message('Ini adalah contoh email yang dikirim melalui localhost pada CodeIgniter menggunakan SMTP email Google (Gmail).');
+          $this->email->from($emailuser,'Admin Website GRII Kertajaya');
+          $this->email->to($emailuser);
+          $this->email->subject($subject);
+          $this->email->message($message);
 
           if ($this->email->send())
          {
-             echo 'Sukses! email berhasil dikirim.';
+             $this->session->set_flashdata('berhasil', 'Email berhasil terkirim');
+             redirect('Contact_form');
          }
          else
          {

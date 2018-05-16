@@ -1,3 +1,4 @@
+<?php if(!$this->session->userdata("status") == "login"){redirect(base_url());} ?>
 <body>
 
   <section id="container" >
@@ -14,7 +15,7 @@
           		<div class="col-lg-12">
                   <div class="form-panel">
                     <?php $attributes = array('id' => 'form_tambah','class'=> 'form-horizontal','method' => 'POST');
-                  echo form_open_multipart('Profile/ubahPass', $attributes); ?>
+                  echo form_open('Profile/ubahPass', $attributes); ?>
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Password Lama</label>
                               <div class="col-sm-4">

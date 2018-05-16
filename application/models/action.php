@@ -206,5 +206,11 @@
       $query =$this->db->query('SELECT * FROM logpinjaman');
       return $query->result();
     }
+
+    public function get_tgl()
+    {
+      $query =$this->db->query('SELECT * FROM pinjaman');
+      return $query->result();
+    }
   }
  ?>

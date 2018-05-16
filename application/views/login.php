@@ -23,6 +23,7 @@
 		            <input type="text" class="form-control" placeholder="Email" name="email" autofocus>
 		            <br>
 		            <input type="password" class="form-control" placeholder="Password" name="password">
+                  <div class="g-recaptcha" data-sitekey="6LerslkUAAAAAChnQj9eVxPDaNzZuBUiaOJUOUey"></div>
 		            <label class="checkbox">
 		                <span class="pull-right">
 		                    <a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a>
