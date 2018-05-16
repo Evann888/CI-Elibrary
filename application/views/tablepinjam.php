@@ -1,3 +1,5 @@
+<?php if(!$this->session->userdata("admin") == 1){redirect(base_url());} ?>
+
 <body>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jszip-2.5.0/dt-1.10.16/b-1.5.1/b-html5-1.5.1/cr-1.4.1/fh-3.1.3/kt-2.3.2/r-2.2.1/rg-1.0.2/rr-1.2.3/sc-1.4.4/sl-1.2.5/datatables.min.css"/>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
@@ -56,7 +58,9 @@
                      <!-- SERVER STATUS PANELS -->
 
 
-                     <section id="no-more-tables">
+         <div class="row mt">
+               <div class="col-lg-12">
+                       <div class="content-panel">
                        <!--  di custom js table1-->
                          <table id="table1" class="display">
                              <thead class="">
@@ -93,19 +97,29 @@
                                      <button id="cancel_button" type="button" class="btn btn-danger">
                                        <i class="glyphicon glyphicon-remove"></i> Cancel
                                      </button>
+                                     </a>
                                    <?php else : ?>
-                                     <button id="cancel_button" type="button" class="btn btn-success">
-                                       Finish  <i class="glyphicon glyphicon-thumbs-up"></i>
-                                     </button>
+                                   <button id="approve_button" data-toggle="modal" data-target="#finish"
+                                     data-isbn="<?php echo $u->ISBN?>" data-judul="<?php echo $u->Judul_Buku?>"
+                                     data-nama="<?php echo $u->Nama?>" data-hari="<?php echo $u->Hari ?>"
+                                     type="button" class="btn btn-success">
+                                     Finish  <i class="glyphicon glyphicon-thumbs-up"></i>
+                                   </button>
                                    <?php endif ?>
                                  </td>
                              </tr>
                              <?php } ?>
                              </tbody>
                          </table>
+                         <form class="" action="<?php echo base_url('Tablepinjam/report'); ?>" method="post">
+                           <button class="btn btn-primary" name="submit"  type="submit"> Download Report</button>
+                         </form>
 
                         <?php if($this->session->flashdata('sukses')) : ?>
                             <div class="alert alert-success alert-dismissable"> <?php echo $this->session->flashdata('sukses');?></div>
+                        <?php endif; ?>
+                        <?php if($this->session->flashdata('error')) : ?>
+                            <div class="alert alert-warning alert-dismissable"> <?php echo $this->session->flashdata('error');?></div>
                         <?php endif; ?>
                         <?php if($this->session->flashdata('hapus')) : ?>
                           <div class="alert alert-success alert-dismissable"> <?php echo $this->session->flashdata('hapus');?></div>
@@ -151,6 +165,51 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="modal fade" id="finish" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">Finish Booking Buku</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                            <?php $attributes = array('id' => 'form_approve','method' => 'POST');
+                            echo form_open('Tablepinjam/finish', $attributes); ?>
+                            <div class="modal-body">
+                              <div class="form-group">
+                                <label><b>ISBN</b></label>
+                                <p id="isbn" class="form-control-static"></p>
+                                <input type="hidden" name="isbn" id="isbnhide">
+                              </div>
+                              <div class="form-group">
+                                <label><b>Judul Buku</b></label>
+                                <p id="judul" class="form-control-static"></p>
+                              </div>
+                              <div class="form-group">
+                                <label><b>Nama Peminjam</b></label>
+                                <p id="nama" class="form-control-static"></p>
+                                <input type="hidden" name="nama" id="namahide">
+                              </div>
+                              <div class="form-group">
+                                <label><b>Lama Booking(hari)</b></label>
+                                 <p id="hari" class="form-control-static"></p>
+                                 <input type="hidden" name="hari" id="harihide">
+                               </div>
+
+                               <label class="text-warning"><b>*Pilih finish hanya ketika buku sudah dikembalikan</b></label>
+
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary" onclick="">Finish</button>
+                            </div>
+                     <?php echo form_close(); ?>
+                   </div>
+                 </div>
+               </div>
+
                        </section>
  					</div><!-- /row -->
 

@@ -19,6 +19,20 @@
       return $this->db->get($table);
     }
 
+    public function get_5_data($table)
+    {
+      $this->db->order_by('Nomor', 'DESC');
+      $this->db->limit(5);
+      return $this->db->get($table);
+    }
+
+    public function get_top_buku($table)
+    {
+      $this->db->order_by('Hits', 'DESC');
+      $this->db->limit(5);
+      return $this->db->get($table);
+    }
+
     public function insert_record($table,$data){
       $sql = $this->db->insert($table, $data);
       if($sql === true){
@@ -62,6 +76,12 @@
       return true;
     }
 
+    function getPassLogin($email)
+    {
+      $query = $this->db->query("SELECT Password FROM anggota WHERE Email = '$email'");
+      return $query->row()->Password;
+    }
+
     function getNomorLogin($email)
     {
       $query = $this->db->query("SELECT Nomor FROM anggota WHERE Email = '$email'");
@@ -90,12 +110,6 @@
     {
       $query = $this->db->query("SELECT is_upload FROM anggota WHERE Email = '$email'");
       return $query->row()->is_upload;
-    }
-
-    function getPassLogin($email)
-    {
-      $query = $this->db->query("SELECT Password FROM anggota WHERE Email = '$email'");
-      return $query->row()->Password;
     }
 
     function getPassDbNow($nomor)
@@ -134,7 +148,7 @@
       return $this->db->get_where($table,array("Email" => $email));
     }
 
-    public function update_datapinjam($data,$isbn,$nama,$datetime,$table){
+    public function update_datapinjam($data,$isbn,$nama,$table){
       $sql = $this->db->where('ISBN= ', $isbn);
       $sql = $this->db->where('Nama= ', $nama);
       $sql = $this->db->update($table,$data);
@@ -145,6 +159,7 @@
     public function delete_pinjaman($table,$ID)
     {
       $query =$this->db->query('DELETE FROM '.$table." Where ID = '$ID'");
+      return true;
     }
 
     public function join_2_tabel($table,$join_table,$nama,$judul)
@@ -160,6 +175,36 @@
        {
            return TRUE;
        }
+    }
+
+//finish
+    public function update_stok_hits($isbn,$table){
+      $this->db->set('Stok', 'Stok+1', FALSE); //agar tidak dipetik karena int
+      $this->db->set('Hits', 'Hits+1', FALSE); //agar tidak dipetik karena int
+      $this->db->where('ISBN= ', $isbn);
+      $this->db->update($table);
+      return true;
+    }
+
+    public function update_status_log($isbn,$nama,$table){
+      $this->db->set('Status', 'Telah dikembalikan');
+      $this->db->where('ISBN= ', $isbn);
+      $this->db->where('Nama= ', $nama);
+      $this->db->update($table);
+      return true;
+    }
+
+    public function delete_finish($isbn,$table)
+    {
+      $sql = $this->db->where('ISBN= ', $isbn);
+      $this->db->delete($table);
+      return true;
+    }
+
+    public function get_logpinjaman()
+    {
+      $query =$this->db->query('SELECT * FROM logpinjaman');
+      return $query->result();
     }
   }
  ?>

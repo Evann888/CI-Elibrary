@@ -1,3 +1,4 @@
+<?php if(!$this->session->userdata("admin") == 1){redirect(base_url());} ?>
 <body>
 
   <section id="container" >
@@ -7,7 +8,7 @@
       <!--main content start-->
       <section id="main-content">
           <section class="wrapper">
-          	<h3><i class="fa fa-angle-right"></i>Contact Us</h3>
+          	<h3><i class="fa fa-angle-right"></i>Kirim Notifikasi</h3>
 
           	<!-- BASIC FORM ELELEMNTS -->
           	<div class="row mt">
@@ -17,24 +18,19 @@
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Subjek</label>
                               <div class="col-sm-4">
-                                  <input class="form-control round-form" autofocus type="text" f>
+                                  <input name="subjek" class="form-control round-form" autofocus type="text" f>
                                     <!-- <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span> -->
                               </div>
                           </div>
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Email</label>
                               <div class="col-sm-4">
-                                <?php if($this->session->userdata("status") != 'login'): ?>
-                                  <input name ="emailuser" class="form-control round-form" autofocus type="text">
-                                <?php elseif($this->session->userdata("status") == 'login'):?>
-                                  <p class="form-control round-form"><?php echo $this->session->userdata("email"); ?></p>
-                                <?php endif;?>
-                              </div>
+                                  <input name="emailuser" class="form-control round-form" type="text">
                           </div>
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Message</label>
                               <div class="col-sm-6">
-                                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Input Message Here"></textarea>
+                                  <textarea name="msg" lass="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Input Message Here"></textarea>
                               </div>
                           </div>
                           <button type="submit" class="btn btn-theme">Send Message</button>

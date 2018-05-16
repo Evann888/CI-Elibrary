@@ -38,7 +38,9 @@ MAIN SIDEBAR MENU
                 </a>
                 <ul class="sub">
                     <li><a  href="main/toRegister">Register Page</a></li>
-                    <li><a  href="main/toLogin">Login</a></li>
+                    <?php if($this->session->userdata("status") != 'login'): ?>
+                      <li><a  href="main/toLogin">Login</a></li>
+                    <?php endif; ?>
                 </ul>
             </li>
             <li class="sub-menu">

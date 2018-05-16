@@ -15,8 +15,12 @@
         $this->load->view('t_header');
         $this->load->view('t_sidebar');
         $data['buku'] = $this->action->get_9_data('buku')->result();
+        $data['anggota'] = $this->action->get_5_data('anggota')->result();
+        $data['topbuku'] = $this->action->get_top_buku('buku')->result();
+
         $this->load->view('main',$data);
         $this->load->view('t_footer');
+        date_default_timezone_set('Asia/Jakarta');
       }
 
       public function booking()
@@ -44,7 +48,7 @@
                // $this->index()
              }
            } else{
-             $this->session->set_flashdata('error', 'Buku telah dibooking');
+             $this->session->set_flashdata('error', 'Booking buku sedang menunggu status admin');
              redirect('Main');
            }
          }else{

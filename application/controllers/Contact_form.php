@@ -38,8 +38,10 @@
                           'newline'   => "\r\n",
           );
 
-          $emailuser = $this->input->post("emailuser");
-          var_dump($emailuser); die();
+
+          $subject = trim(htmlspecialchars($this->input->post('subjek'),ENT_QUOTES));
+          $emailuser = trim(htmlspecialchars($this->input->post('emailuser'),ENT_QUOTES));
+          $message = trim(htmlspecialchars($this->input->post('msg'),ENT_QUOTES));
 
           $this->load->library('email',$config);
           $this->email->set_newline("\r\n");

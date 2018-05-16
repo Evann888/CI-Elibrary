@@ -8,6 +8,7 @@
         $this->load->model('action');
         $this->load->helper('url_helper');
         $this->load->library('form_validation');
+        $this->load->library('encrypt');
       }
 
       public function index()
@@ -28,8 +29,8 @@
       }
 
       public function aksi_login(){
-    		$email = $this->input->post('email');
-    		$password = $this->input->post('password');
+    		$email = trim(htmlspecialchars($this->input->post('email'),ENT_QUOTES));
+    		$password = trim(htmlspecialchars($this->input->post('password'),ENT_QUOTES));
         // var_dump($gbrpath);
         // die();
         // $captcha_response = $this->input->post('g-recaptcha-response');
@@ -38,14 +39,19 @@
         // $response = file_get_contents($url."?secret=".$secretkey."&response=".$captcha_response);
         // $data = json_decode($response);
 
-    		$where = array(
-    			'Email' => $email,
-    			'Password' => $password
-    			);
-    		$cek = $this->action->cek_login("anggota",$where)->num_rows();
+
+    		// $where = array(
+    		// 	'Email' => $email,
+    		// 	'Password' => $password
+    		// 	);
 
         // if(isset($data->success) && $data->success =="true"){
-          if($cek > 0 ){
+
+          $passlogin = $this->action->getPassLogin($email);
+          $decodepass = $this->encrypt->decode($passlogin);
+          $inputpass = $this->input->post('password');
+
+          if($decodepass==$inputpass){
             $nomor = $this->action->getNomorLogin($email);
             $username = $this->action->getNamaLogin($email);
             $gbrpath = $this->action->getPathLogin($email);

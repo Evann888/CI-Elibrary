@@ -60,6 +60,8 @@
                    <div class="row mt">
                      <!-- SERVER STATUS PANELS -->
 
+           <div class="row mt">
+                 <div class="col-lg-12">
                   <div class="content-panel">
                      <section id="no-more-tables">
                        <!--  di custom js table1-->
@@ -82,14 +84,22 @@
                              <tr>
                                  <td  data-title="No"><?php echo $no++ ?></td>
                                  <td  data-title="Judul"><?php echo $u->Judul_Buku ?></td>
-                                 <td  data-title="Tanggal Disetujui"><?php echo $u->Tanggal_Pinjaman ?></td>
-                                 <td  data-title="Tanggal Kembali"><?php echo $u->Tanggal_Kembali ?></td>
+                                 <td  data-title="Tanggal Disetujui"><?php if($u->Tanggal_Pinjaman != 0000-00-00){echo date("d-m-Y",strtotime($u->Tanggal_Pinjaman));} ?></td>
+                                 <td  data-title="Tanggal Kembali"><?php if($u->Tanggal_Kembali != 0000-00-00){echo date("d-m-Y",strtotime($u->Tanggal_Kembali));}?></td>
                                  <td  data-title="Status"><?php echo $u->Status ?></td>
                                  <td  data-title="Aksi">
+                                   <?php if($u->Status =="Menunggu Konfirmasi"):?>
                                      <a href="Pinjam/Cancel/<?php echo ($u->ID) ?>">
                                      <button id="cancel_button" type="button" class="btn btn-danger">
                                        <i class="glyphicon glyphicon-remove"></i> Cancel
                                      </button>
+                                     </a>
+                                   <?php endif; ?>
+                                   <?php if($u->Status =="Telah Disetujui"):?>
+                                     <button id="cancel_button" type="button" class="btn btn-success">
+                                       Selamat Membaca
+                                     </button>
+                                   <?php endif; ?>
                                      </a>
                                    </td>
                              </tr>

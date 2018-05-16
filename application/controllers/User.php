@@ -17,6 +17,8 @@
 
         $data['user'] = $this->action->get_data('anggota')->result();
         $this->load->view('user',$data);
+        date_default_timezone_set('Asia/Jakarta');
+
         // $this->load->view('table',$data);
 
         // if($this->session->userdata('status') != "admin"){
@@ -28,20 +30,22 @@
 
       public function tambah()
       {
+        $encryptedpass = $this->encrypt->encode($this->input->post('password'));
+
         $data = array(
-          'Email' => $this->input->post('email'),
-          'Password' => $this->input->post('password'),
-          'Nama' => ucwords($this->input->post('nama')),
-          'Jenis_Kelamin' => $this->input->post('jk'),
-          'Alamat' => $this->input->post('alamat'),
+          'Email' => trim(htmlspecialchars($this->input->post('email'),ENT_QUOTES)),
+          'Password' => $encryptedpass,
+          'Nama' => trim(htmlspecialchars(ucwords($this->input->post('nama')),ENT_QUOTES)),
+          'Jenis_Kelamin' => trim(htmlspecialchars(ucwords($this->input->post('jk')),ENT_QUOTES)),
+          'Alamat' => trim(htmlspecialchars(ucwords($this->input->post('alamat')),ENT_QUOTES)),
           'Tanggal_Lahir' => $this->input->post('tgl'),
-          'NIK' => $this->input->post('nik'),
-          'No_HP' => $this->input->post('nohp'),
+          'NIK' => trim(htmlspecialchars($this->input->post('nik'),ENT_QUOTES)),
+          'No_HP' => trim(htmlspecialchars($this->input->post('nohp'),ENT_QUOTES)),
           'date' => date("Y-m-d")
         );
 
         // valid_email
-        $this->form_validation->set_rules('email', 'Email', 'required|is_unique[anggota.Email]');
+        $this->form_validation->set_rules('email', 'Email', 'required|is_unique[anggota.Email]|valid_email');
         $this->form_validation->set_rules('nik', 'NIK', 'required|numeric|min_length[16]|max_length[16]');
         $this->form_validation->set_rules('nohp', 'Nomor HP', 'required|numeric');
 
@@ -86,15 +90,17 @@
 
       function edit()
       {
+        $encryptedpass = $this->encrypt->encode($this->input->post('password'));
+
         $data = array(
-          'Email' => $this->input->post('email'),
-          'Password' => $this->input->post('password'),
-          'Nama' => ucwords($this->input->post('nama')),
-          'Jenis_Kelamin' => $this->input->post('jk'),
-          'Alamat' => $this->input->post('alamat'),
+          'Email' => trim(htmlspecialchars($this->input->post('email'),ENT_QUOTES)),
+          'Password' => $encryptedpass,
+          'Nama' => trim(htmlspecialchars(ucwords($this->input->post('nama')),ENT_QUOTES)),
+          'Jenis_Kelamin' => trim(htmlspecialchars(ucwords($this->input->post('jk')),ENT_QUOTES)),
+          'Alamat' => trim(htmlspecialchars(ucwords($this->input->post('alamat')),ENT_QUOTES)),
           'Tanggal_Lahir' => $this->input->post('tgl'),
-          'NIK' => $this->input->post('nik'),
-          'No_HP' => $this->input->post('nohp'),
+          'NIK' => trim(htmlspecialchars($this->input->post('nik'),ENT_QUOTES)),
+          'No_HP' => trim(htmlspecialchars($this->input->post('nohp'),ENT_QUOTES)),
         );
 
         // valid_email

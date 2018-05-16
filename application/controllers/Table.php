@@ -59,7 +59,6 @@
 
              $this->image_lib->resize();
 
-
              $ext =strtolower(pathinfo($_FILES['gambar']["name"],PATHINFO_EXTENSION));;
              // $ext = $z['image_type'];
              // $ext = strtoupper($ext); //uppercase karena hostingan mengharuskan
@@ -74,11 +73,11 @@
         }
 
         $data = array(
-          'ISBN' => $this->input->post('isbn'),
-          'Judul_Buku' => ucwords($this->input->post('judul')),
-          'Pengarang' => ucwords($this->input->post('pengarang')),
-          'Penerbit' => ucwords($this->input->post('penerbit')),
-          'Stok' => $this->input->post('stok'),
+          'ISBN' => trim(htmlspecialchars(ucwords($this->input->post('isbn')),ENT_QUOTES)),
+          'Judul_Buku' => trim(htmlspecialchars(ucwords($this->input->post('judul')),ENT_QUOTES)),
+          'Pengarang' => trim(htmlspecialchars(ucwords($this->input->post('pengarang')),ENT_QUOTES)),
+          'Penerbit' => trim(htmlspecialchars(ucwords($this->input->post('penerbit')),ENT_QUOTES)),
+          'Stok' => trim(htmlspecialchars(ucwords($this->input->post('stok')),ENT_QUOTES)),
           'Path' => $config['file_name'].'.'.$ext,
           'DefaultPath' => $defaultPath,
           'is_upload' => $is_upload
@@ -195,7 +194,7 @@
             $this->load->library('image_lib', $config);
 
             $this->image_lib->resize();
-            
+
             $ext =strtolower(pathinfo($_FILES['gambar2']["name"],PATHINFO_EXTENSION));;
             $is_upload = 1;
           }
@@ -204,11 +203,11 @@
         }
 
         $data = array(
-          'ISBN' => $this->input->post('isbn'),
-          'Judul_Buku' => ucwords($this->input->post('judul')),
-          'Pengarang' => $this->input->post('pengarang'),
-          'Penerbit' => $this->input->post('penerbit'),
-          'Stok' => $this->input->post('stok'),
+          'ISBN' => trim(htmlspecialchars(ucwords($this->input->post('isbn')),ENT_QUOTES)),
+          'Judul_Buku' => trim(htmlspecialchars(ucwords($this->input->post('judul')),ENT_QUOTES)),
+          'Pengarang' => trim(htmlspecialchars(ucwords($this->input->post('pengarang')),ENT_QUOTES)),
+          'Penerbit' => trim(htmlspecialchars(ucwords($this->input->post('penerbit')),ENT_QUOTES)),
+          'Stok' => trim(htmlspecialchars(ucwords($this->input->post('stok')),ENT_QUOTES)),
           'Path' => $config['file_name'].'.'.$ext,
           'DefaultPath' => $defaultPath,
           'is_upload' => $is_upload
