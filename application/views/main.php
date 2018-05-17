@@ -83,8 +83,8 @@
 
 							<div class="row">
 								<div class="col-md-6">
-									<p class="small mt" style="color:black;">Pengarang</p>
-									<p style="color:black;"><?php echo $u->Pengarang ?></p>
+									<p class="small mt hidden-xs hidden-sm hidden-md" style="color:black;">Pengarang</p>
+									<p class="small mt hidden-xs hidden-sm hidden-md" style="color:black;"><?php echo $u->Pengarang ?></p>
 								</div>
 								<div class="col-md-6">
 									<p class="small mt" style="color:black;">Stok</p>
@@ -179,7 +179,7 @@ RIGHT SIDEBAR CONTENT
                   </div>
                   <div class="details">
                     <p><a href="#"><?php echo $u->Nama ?></a><br/>
-                       <muted>Available</muted>a
+                       Bergabung Sejak <?php echo date("d-m-Y",strtotime($u->date)) ?>
                     </p>
                   </div>
                 </div>

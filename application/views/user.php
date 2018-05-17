@@ -48,7 +48,7 @@
                                         <td  data-title="Jenis Kelamin"><?php echo $u->Jenis_Kelamin ?></td>
                                         <td  data-title="Email"><?php echo $u->Email ?></td>
                                         <td  data-title="Alamat"><?php echo $u->Alamat ?></td>
-                                        <td  data-title="Tanggal Lahir"><?php echo $u->Tanggal_Lahir ?></td>
+                                        <td  data-title="Tanggal Lahir"><?php echo date("d-m-Y",strtotime($u->Tanggal_Lahir)) ?></td>
                                         <td  data-title="NIK"><?php echo $u->NIK ?></td>
                                         <td  data-title="No HP"><?php echo $u->No_HP ?></td>
                                         <td  data-title="Aksi">

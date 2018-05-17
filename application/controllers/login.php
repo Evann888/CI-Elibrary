@@ -33,11 +33,11 @@
     		$password = trim(htmlspecialchars($this->input->post('password'),ENT_QUOTES));
         // var_dump($gbrpath);
         // die();
-        $captcha_response = $this->input->post('g-recaptcha-response');
-         $url = 'https://www.google.com/recaptcha/api/siteverify';
-         $secretkey = '6LerslkUAAAAAPsZyZ4202jCv6BALaldACceBze1';
-         $response = file_get_contents($url."?secret=".$secretkey."&response=".$captcha_response);
-         $data = json_decode($response);
+        // $captcha_response = $this->input->post('g-recaptcha-response');
+        //  $url = 'https://www.google.com/recaptcha/api/siteverify';
+        //  $secretkey = '6LerslkUAAAAAPsZyZ4202jCv6BALaldACceBze1';
+        //  $response = file_get_contents($url."?secret=".$secretkey."&response=".$captcha_response);
+        //  $data = json_decode($response);
 
 
     		// $where = array(
@@ -51,7 +51,7 @@
           $decodepass = $this->encrypt->decode($passlogin);
           $inputpass = $this->input->post('password');
 
-          if(isset($data->success) && $data->success =="true"){
+          // if(isset($data->success) && $data->success =="true"){
             if($decodepass==$inputpass){
               $nomor = $this->action->getNomorLogin($email);
               $username = $this->action->getNamaLogin($email);
@@ -77,10 +77,6 @@
               $this->session->set_flashdata('gagal', 'Email atau Password Salah');
               redirect('Login');
             }
-          }else{
-            $this->session->set_flashdata('gagal', 'Silahkan mengisi Data dan CAPTCHA dengan tepat');
-            redirect('Login');
-          }
         // } else{
         //   $this->session->set_flashdata('gagal', 'Silahkan mengisi Data dan CAPTCHA dengan tepat');
         //   redirect('Login');
